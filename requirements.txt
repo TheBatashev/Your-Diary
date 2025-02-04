@@ -1,0 +1,6 @@
+fastapi
+sqlalchemy
+jinja2
+python-multipart
+markdown
+uvicorn

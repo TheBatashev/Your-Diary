@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="header-section">
+        <h1 class="diary-title">📖 Мой личный дневник</h1>
+        
+        <form class="filter-form" method="get">
+            <div class="search-box">
+                <input type="text" name="search" placeholder="Search entries..." 
+                       value="{{ search if search }}" class="form-control">
+                <button type="submit" class="search-btn">🔍</button>
+            </div>
+            
+            <div class="filters">
+                <button type="submit" name="period" value="week" 
+                        class="btn filter-btn {% if period == 'week' %}active{% endif %}">
+                    Last Week
+                </button>
+                <input type="date" name="date" value="{{ selected_date }}" 
+                       class="form-control date-picker" 
+                       onchange="this.form.submit()">
+                <a href="/" class="btn reset-btn">Reset</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Остальная часть шаблона остается как было -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>My Diary Entries</h1>
+        <a href="/create" class="btn btn-success">+ Новая запись</a>
+    </div>
+
+    {% if not entries %}
+        <div class="alert alert-info">Записей нет. Добавьте новую!</div>
+    {% else %}
+        <div class="row">
+            {% for entry in entries %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ entry.title }}</h5>
+                        <p class="card-text text-muted small">
+                            {{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </p>
+                        <p class="card-text">{{ entry.content[:100] }}...</p>
+                        <a href="/entry/{{ entry.id }}" class="btn btn-primary">Read More</a>
+                        <a href="/edit/{{ entry.id }}" class="btn btn-outline-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="entry-details">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title entry-title">{{ entry.title }}</h2>
+            <div class="entry-meta">
+                <span class="created-date">
+                    🗓 Создано: {{ entry.created_at.strftime('%d %b %Y %H:%M') }}
+                </span>
+                <span class="updated-date">
+                    ✏️ Обновлено: {{ entry.updated_at.strftime('%d %b %Y %H:%M') }}
+                </span>
+            </div>
+            <div class="entry-content">
+                {{ entry.content|markdown|safe }}
+            </div>
+            <div class="entry-actions mt-4">
+                <a href="/edit/{{ entry.id }}" class="btn btn-primary">Изменить</a>
+                <a href="/" class="btn btn-outline-secondary">Вернуться</a>
+            </div>
+            <!-- <div class="entry-content">
+                {{ entry.content|markdown|safe }}
+            </div> -->
+        </div>
+    </div>
+</div>
+{% endblock %}
